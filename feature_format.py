@@ -6,7 +6,7 @@ Created on Mon Jan 15 14:02:47 2018
 """
 
 import numpy as np
-
+import math
 #==============================================================================
 #      convert dictionary to numpy array of features
 #        remove_None = True will convert "None" string to 0.0
@@ -21,7 +21,7 @@ import numpy as np
 #    
 #==============================================================================
 
-def featureFormat( dictionary, features, remove_None=True, remove_all_zeroes=True, remove_any_zeroes=False, sort_keys = False):
+def featureFormat( dictionary, features,remove_NaN=True, remove_None=True, remove_all_zeroes=True, remove_any_zeroes=False, sort_keys = False):
 
 
 
@@ -49,7 +49,7 @@ def featureFormat( dictionary, features, remove_None=True, remove_all_zeroes=Tru
                 print "Input values are of proper size"
 #                return
             value = dictionary[key][feature]
-            if value is None or value is 'NaN' and remove_None:
+            if (value is None or  math.isnan(float(value))) and (remove_None or remove_NaN) :
                 value = 0
             tmp_list.append( float(value) )
             
@@ -65,14 +65,14 @@ def featureFormat( dictionary, features, remove_None=True, remove_all_zeroes=Tru
         if remove_all_zeroes:
             append = False
             for item in test_list:
-                if item != 0 and item != "None":
+                if item != 0 :   #and item != "None" and item != "NaN"
                     append = True
                     break
         ### if any features for a given data point are zero
         ### and you want to remove data points with any zeroes,
         ### handle that here
         if remove_any_zeroes:
-            if 0 in test_list or "None" in test_list:
+            if 0 in test_list :    #or "None" in test_list or "NaN" in test_list
                 append = False
         ### Append the data point if flagged for addition.
         if append:
