@@ -9,14 +9,14 @@ import numpy as np
 
 
 
-def Opening_excel(FileName, SheetName):
+def Opening_excel(FileName):
     Sheet = {}
     CountryData = {}
     xls = pd.ExcelFile(FileName)
     
     for i in xls.sheet_names:
         Sheet[i]= pd.read_excel(xls, i)
-        if i == SheetName:
+        if i == 'InternalData_2017':
             Sheet[i].set_index(['Brand','Country'],  inplace=True)
         else:
             Sheet[i].set_index(['Country'],  inplace=True)
