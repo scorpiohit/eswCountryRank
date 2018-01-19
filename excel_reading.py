@@ -17,9 +17,9 @@ def Opening_excel(FileName):
     for i in xls.sheet_names:
         Sheet[i]= pd.read_excel(xls, i)
         if i == 'InternalData_2017':
-            Sheet[i].set_index(['Brand','Country'],  inplace=True)
+            Sheet[i].set_index(['Brand','Country Code'],  inplace=True)
         else:
-            Sheet[i].set_index(['Country'],  inplace=True)
+            Sheet[i].set_index(['Country Code'],  inplace=True)
         CountryData[i] = Sheet[i].to_dict(orient='index') 
     
     return Sheet,CountryData
