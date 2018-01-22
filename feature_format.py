@@ -47,9 +47,9 @@ def featureFormat( dictionary, features,remove_NaN=True, remove_None=True, remov
                 print "Argument is not string or number"
             except ValueError:
                 print "Input values are of proper size"
-#                return
+                return
             value = dictionary[key][feature]
-            if (value is None or  math.isnan(float(value))) and (remove_None or remove_NaN) :
+            if (value is None or math.isnan(float(value))) and (remove_None or remove_NaN) :   
                 value = 0
             tmp_list.append( float(value) )
             
@@ -83,23 +83,25 @@ def featureFormat( dictionary, features,remove_NaN=True, remove_None=True, remov
 
 
 
-def targetFeatureSplit( data ):
-    """ 
-        given a numpy array like the one returned from
-        featureFormat, separate out the first feature
-        and put it into its own list (this should be the 
-        quantity you want to predict)
-
-        return targets and features as separate lists
-
-        (sklearn can generally handle both lists and numpy arrays as 
-        input formats when training/predicting)
-    """
-
-    target = []
-    features = []
-    for item in data:
-        target.append( item[0] )
-        features.append( item[1:] )
-
-    return target, features
+#==============================================================================
+# def targetFeatureSplit( data ):
+#     """ 
+#         given a numpy array like the one returned from
+#         featureFormat, separate out the first feature
+#         and put it into its own list (this should be the 
+#         quantity you want to predict)
+# 
+#         return targets and features as separate lists
+# 
+#         (sklearn can generally handle both lists and numpy arrays as 
+#         input formats when training/predicting)
+#     """
+# 
+#     target = []
+#     features = []
+#     for item in data:
+#         target.append( item[0] )
+#         features.append( item[1:] )
+# 
+#     return target, features
+#==============================================================================
