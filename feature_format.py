@@ -56,9 +56,18 @@ def featureFormat( dictionary, features,remove_NaN=True, remove_None=True, remov
             
         append = True
         test_list = tmp_list
+        
+
 
         # Logic for deciding whether or not to add the data point.
-        append = True
+#        append = True
+#        #exclude 'poi' class as criteria.
+#        if features[0] == 'Flag Nike':
+#            test_list = tmp_list[m:]
+#        else:
+#            test_list = tmp_list
+        
+        
 
         ### if all features are zero and you want to remove
         ### data points that are all zero, do that here
@@ -83,25 +92,23 @@ def featureFormat( dictionary, features,remove_NaN=True, remove_None=True, remov
 
 
 
-#==============================================================================
-# def targetFeatureSplit( data ):
-#     """ 
-#         given a numpy array like the one returned from
-#         featureFormat, separate out the first feature
-#         and put it into its own list (this should be the 
-#         quantity you want to predict)
-# 
-#         return targets and features as separate lists
-# 
-#         (sklearn can generally handle both lists and numpy arrays as 
-#         input formats when training/predicting)
-#     """
-# 
-#     target = []
-#     features = []
-#     for item in data:
-#         target.append( item[0] )
-#         features.append( item[1:] )
-# 
-#     return target, features
-#==============================================================================
+def targetFeatureSplit( data ):
+    """ 
+        given a numpy array like the one returned from
+        featureFormat, separate out the first feature
+        and put it into its own list (this should be the 
+        quantity you want to predict)
+
+        return targets and features as separate lists
+
+        (sklearn can generally handle both lists and numpy arrays as 
+        input formats when training/predicting)
+    """
+
+    target = []
+    features = []
+    for item in data:
+        target.append( item[0] )
+        features.append( item[1:] )
+
+    return target, features
