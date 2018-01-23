@@ -26,6 +26,6 @@ def Opening_excel(FileName):
             CountryData[i] = Sheet[i].to_dict(orient='index') 
         else :
             Sheet[i].set_index(['Code'],  inplace=True)
-            CountryData[i] = Sheet[i].to_dict(orient='dict') 
+            CountryData[i] = Sheet[i].to_dict(orient='index') 
     
     return Sheet,CountryData
