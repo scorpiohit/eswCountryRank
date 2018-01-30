@@ -187,7 +187,7 @@ for i in Retailers:
 #for i in Retailers:
       Valid_dict[i] = dict((k, v) for k, v in valid_features[i].items() if (v >=130 or k in InternalFeatures))
       valid_[i] = sorted(Valid_dict[i].keys(),reverse=True)
-      valid_[i] = valid_[i][:9]+valid_[i][22:]
+      valid_[i] = valid_[i][22:]                          ##valid_[i][:9]+valid_[i][22:]                  ##Use the commented code for all internal and exteranl features
 #      print '\n Valid {0} features are   :  {1}   '.format(i,valid_[i])
 
 
@@ -281,7 +281,7 @@ t1 = time()
 # =============================================================================
 
 Score = {}
-rf = RandomForestRegressor(n_estimators=30, max_depth=4)
+rf = RandomForestRegressor(n_estimators=10, max_depth=4)
 for i in Retailers:
       scores = {}
       x_ = X[i]
@@ -315,10 +315,11 @@ print "\n Decision tree algorithm time =    ", round(time()-t1, 5), "seconds"
 
 
 
+#df_output = pd.DataFrame.from_dict(data=Score,orient = 'index')
+#df_output.to_csv('RetailerDatasets.csv',index=True)
+
 df_output = pd.DataFrame.from_dict(data=Score,orient = 'index')
-df_output.to_csv('RetailerDatasets.csv',index=True)
-
-
+df_output.to_csv('RetailerDatasets_OnlyExternal.csv',index=True)
 
 
 #
