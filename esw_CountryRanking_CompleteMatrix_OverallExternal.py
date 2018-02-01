@@ -81,17 +81,7 @@ CountryNames = CountryData[a].keys()
 # print "\n Total Countries : ", len(CountryNames)   
 #==============================================================================
 
-InSignificantFeature = []
-for i,j in FeaturesMapping.items():
-    for k,l in j.items():
-        if l==0:
-            InSignificantFeature.append(i)
 
-for i,j in CountryData[a].items():
-    for m in range(len(InSignificantFeature)):
-        for k,l in j.items():
-            if k==InSignificantFeature[m]:
-                del j[k]
 
 
    
@@ -114,24 +104,16 @@ from feature_format import featureFormat_nan
 
 
 features_list_base = list(sorted(set(x for l in CountryData[a].values() for x in l),reverse=True))
-retailerslist = copy.deepcopy(features_list_base[9:22])                                               #Because of total 13 retailers, when sheets other than BrandFlagExternal is used need to change the number
-Retailers = sorted([s.replace('Flag ','') for s in retailerslist])
-Only_features = copy.deepcopy(features_list_base[:9])+copy.deepcopy(features_list_base[22:])
-#print '\n',features_list_base
+#retailerslist = copy.deepcopy(features_list_base[9:22])                                               #Because of total 13 retailers, when sheets other than BrandFlagExternal is used need to change the number
+#Retailers = sorted([s.replace('Flag ','') for s in retailerslist])
+Only_features = copy.deepcopy(features_list_base[:9])+copy.deepcopy(features_list_base[9:])
+#print '\n Only_features : ',Only_features
 
 
 
 
-def dataset_maker(data_dict):
-      p_dict = {}
-      for i,j in data_dict.items():
-            for k,l in j.items():
-                  x = np.array(l,dtype=np.float)
-                  if k =='I5' and np.isnan(x)==False:
-                        p_dict.update({str(i):j})    
-      return p_dict
 
-CountryData[a] = dataset_maker(CountryData[a])
+
 #di = {}
 #for i,j in parent_dataset_1.items():
 #      j.set_index(['CountryCode'],  inplace=True)
@@ -139,6 +121,19 @@ CountryData[a] = dataset_maker(CountryData[a])
       
 
 
+InSignificantFeature = []
+for i,j in FeaturesMapping.items():
+    for k,l in j.items():
+        if l==0:
+            InSignificantFeature.append(i)
+            
+#print '\n InSignificantFeature ',InSignificantFeature
+            
+for i,j in CountryData[a].items():
+    for m in range(len(InSignificantFeature)):
+        for k,l in j.items():
+            if k==InSignificantFeature[m]:
+                  del j[k]
 
 
 
@@ -191,9 +186,28 @@ my_dataset = removing_Nan_features(my_dataset)
 #for i in Retailers:
 Valid_dict = dict((k, v) for k, v in valid_features.items() if (v >=130 or k in InternalFeatures))
 valid_ = sorted(Valid_dict.keys(),reverse=True)
-valid_ = valid_[:9]                          ##valid_[i][:9]+valid_[i][22:]
-#      print '\n Valid {0} features are   :  {1}   '.format(i,valid_[i])
+valid_ = valid_[9:]                          ##valid_[i][:9]+valid_[i][22:]
+#print '\n Valid  features are   :     ',valid_
 
+
+# =============================================================================
+# =============================================================================
+# =============================================================================
+# # # #I removed the 63 rows from data thats why my valid count will be different from the retailer datatset count for features
+# =============================================================================
+# =============================================================================
+# =============================================================================
+
+def dataset_maker(data_dict):
+      p_dict = {}
+      for i,j in data_dict.items():
+            for k,l in j.items():
+                  x = np.array(l,dtype=np.float)
+                  if k =='I5' and np.isnan(x)==True:
+                        p_dict.update({str(i):j})    
+      return p_dict
+
+CountryData[a] = dataset_maker(CountryData[a])
 
 
 
@@ -262,7 +276,6 @@ Y_list = df2_mean.tolist()
 
 
 
-
 print "\n Data Preparation time =    ", round(time()-t0, 5), "seconds"
 
 
@@ -312,7 +325,7 @@ print "\n Decision tree algorithm time =    ", round(time()-t1, 5), "seconds"
 
 
 df_output = pd.DataFrame.from_dict(data=scores,orient = 'index')
-df_output.to_csv('RetailerDatasets_OverallInternal.csv',index=True)
+df_output.to_csv('RetailerDatasets_OverallExternal.csv',index=True)
 
 
 # =============================================================================

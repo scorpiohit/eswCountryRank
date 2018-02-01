@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Tue Jan 30 12:49:55 2018
+
+@author: Mohit Sharma
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Wed Jan 10 11:42:38 2018
 
 @author: msharma
@@ -187,7 +194,7 @@ for i in Retailers:
 #for i in Retailers:
       Valid_dict[i] = dict((k, v) for k, v in valid_features[i].items() if (v >=130 or k in InternalFeatures))
       valid_[i] = sorted(Valid_dict[i].keys(),reverse=True)
-      valid_[i] = valid_[i][22:]                          ##valid_[i][:9]+valid_[i][22:]                  ##Use the commented code for all internal and exteranl features
+      valid_[i] = valid_[i][:9]+valid_[i][22:]                  ##Use the commented code for all internal and exteranl features
 #      print '\n Valid {0} features are   :  {1}   '.format(i,valid_[i])
 
 
@@ -315,11 +322,8 @@ print "\n Decision tree algorithm time =    ", round(time()-t1, 5), "seconds"
 
 
 
-#df_output = pd.DataFrame.from_dict(data=Score,orient = 'index')
-#df_output.to_csv('RetailerDatasets.csv',index=True)
-
 df_output = pd.DataFrame.from_dict(data=Score,orient = 'index')
-df_output.to_csv('RetailerDatasets_OnlyExternal.csv',index=True)
+df_output.to_csv('RetailerDatasets.csv',index=True)
 
 
 #
